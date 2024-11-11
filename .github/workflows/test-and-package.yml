@@ -1,4 +1,3 @@
-
 name: Test and Package
 
 on:
@@ -25,6 +24,7 @@ jobs:
       run: |
         echo "MAILSAC_API_KEY=$MAILSAC_API_KEY" >> .env
         echo "MAILSAC_TEST_EMAIL=$MAILSAC_TEST_EMAIL" >> .env
+        cat .env  # Add this line to display the contents of the .env file
 
     - name: Install Poetry
       run: |

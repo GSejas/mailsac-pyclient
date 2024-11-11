@@ -29,6 +29,7 @@ def client():
 def test_get_messages(client):
     # Retrieve the test API key from environment variables
     mail_test_email = os.getenv("MAILSAC_TEST_EMAIL")
+    logger.debug("MAILSAC_TEST_EMAIL: %s", mail_test_email)  # Add this line
     logger.info("Starting test_get_messages")
     response = client.get_messages(mail_test_email)
     logger.info("Received response: %s", response)
