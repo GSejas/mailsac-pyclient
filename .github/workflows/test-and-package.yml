@@ -23,8 +23,8 @@ jobs:
         MAILSAC_API_KEY: ${{ secrets.MAILSAC_API_KEY }}
         MAILSAC_TEST_EMAIL: ${{ secrets.MAILSAC_TEST_EMAIL }}
       run: |
-        echo "MAILSAC_API_KEY=$GENIOUS_API_KEY" >> .env
-        echo "MAILSAC_TEST_EMAIL=$PIPELINE_API_TOKEN" >> .env
+        echo "MAILSAC_API_KEY=$MAILSAC_API_KEY" >> .env
+        echo "MAILSAC_TEST_EMAIL=$MAILSAC_TEST_EMAIL" >> .env
 
     - name: Install Poetry
       run: |
