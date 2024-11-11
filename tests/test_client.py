@@ -18,17 +18,17 @@ logger = logging.getLogger(__name__)
 #     sib_api_v3_sdk.ApiClient(configuration)
 # )
 
-# Retrieve the test API key from environment variables
-test_api_key = os.getenv("MAILSAC_API_KEY")
-mail_test_email = os.getenv("MAILSAC_TEST_EMAIL")
 
 
 @pytest.fixture
 def client():
+    test_api_key = os.getenv("MAILSAC_API_KEY")
     return MailsacClient(api_key=test_api_key)
 
 
 def test_get_messages(client):
+    # Retrieve the test API key from environment variables
+    mail_test_email = os.getenv("MAILSAC_TEST_EMAIL")
     logger.info("Starting test_get_messages")
     response = client.get_messages(mail_test_email)
     logger.info("Received response: %s", response)
