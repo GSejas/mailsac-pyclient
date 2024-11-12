@@ -39,6 +39,9 @@ def test_get_messages(client):
         response = client.get_message(mail_test_email, rvd.id)
         assert response.subject == "Test Email For Testing"
         logger.info("Received response: %s", response)
+        response = client.get_message_plain_text(mail_test_email, rvd.id)
+        logger.info("Received response: %s", response)
+        assert response == 'Very testy\n\nJorge\n'
 
 
 def test_check_health(client):

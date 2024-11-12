@@ -43,7 +43,12 @@ class MailsacClient:
         """
         self.api_key = api_key
         self.base_url = base_url
-        self.headers = {"Mailsac-Key": self.api_key, "Content-Type": "application/json"}
+
+    def _get_headers(self) -> dict:
+        """Returns headers with the specified content type or accept type."""
+        return {
+            "Mailsac-Key": self.api_key
+        }
 
     def get_messages(self, email: str) -> List[EmailMessage]:
         """
@@ -58,9 +63,10 @@ class MailsacClient:
         Raises:
             MailsacException: If the request to fetch messages fails.
         """
+        headers = self._get_headers()
         response = requests.get(
             f"{self.base_url}/addresses/{email}/messages",
-            headers=self.headers,
+            headers=headers,
             timeout=10,
         )
         if response.status_code != 200:
@@ -68,6 +74,18 @@ class MailsacClient:
 
         messages = response.json()
         return [EmailMessage(**msg) for msg in messages]
+
+
+    def get_message_plain_text(self, email: str, message_id: str) -> str:
+        """Retrieves the plain text content of a message by its ID."""
+        headers = self._get_headers()  # Request plain text
+        url = f"{self.base_url}/text/{email}/{message_id}"
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            return response.text
+        else:
+            raise Exception(f"Failed to retrieve message plain text: {response.status_code} {response.reason}")
 
     def get_message(self, email: str, message_id: str) -> EmailMessage:
         """
@@ -83,9 +101,10 @@ class MailsacClient:
         Raises:
             MailsacException: If the request to fetch the message fails.
         """
+        headers = self._get_headers()  # Default is JSON
         response = requests.get(
             f"{self.base_url}/addresses/{email}/messages/{message_id}",
-            headers=self.headers,
+            headers=headers,
         )
         if response.status_code != 200:
             raise MailsacException(f"Failed to fetch message: {response.text}")
@@ -106,9 +125,32 @@ class MailsacClient:
         Raises:
             MailsacException: If the request to delete the message fails.
         """
+        headers = self._get_headers()  # Default is JSON
         response = requests.delete(
             f"{self.base_url}/addresses/{email}/messages/{message_id}",
-            headers=self.headers,
+            headers=headers,
+        )
+        if response.status_code != 200:
+            raise MailsacException(f"Failed to delete message: {response.text}")
+
+        return response.status_code == 204
+
+    def delete_messages(self, email: str):
+        """
+        Deletes messages.
+
+        Args:
+            email (str): The email address to delete the message for.
+
+        Returns:
+
+        Raises:
+            MailsacException: If the request to delete the message fails.
+        """
+        headers = self._get_headers()  # Default is JSON
+        response = requests.delete(
+            f"{self.base_url}/addresses/{email}/messages",
+            headers=headers,
         )
         if response.status_code != 200:
             raise MailsacException(f"Failed to delete message: {response.text}")
@@ -123,9 +165,10 @@ class MailsacClient:
             bool: True if the connection is healthy, False otherwise.
         """
         try:
+            headers = self._get_headers()  # Default is JSON
             # Perform a simple GET request to the base URL or
             # an endpoint that does not modify data
-            response = requests.get(f"{self.base_url}/addresses", headers=self.headers)
+            response = requests.get(f"{self.base_url}/addresses", headers=headers)
             return response.status_code == 200
         except requests.RequestException as e:
             print(f"Health check failed: {e}")
