@@ -9,6 +9,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'requests',  # Assuming requests is needed for API calls
+        'pydantic',
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

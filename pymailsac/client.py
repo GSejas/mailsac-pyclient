@@ -15,6 +15,7 @@ import requests
 from typing import List
 from .schemas import EmailMessage
 
+MAILSAC_API_TIMEOUT = 30
 
 class MailsacException(Exception):
     """Custom exception for Mailsac errors."""
@@ -67,7 +68,7 @@ class MailsacClient:
         response = requests.get(
             f"{self.base_url}/addresses/{email}/messages",
             headers=headers,
-            timeout=10,
+            timeout=MAILSAC_API_TIMEOUT
         )
         if response.status_code != 200:
             raise MailsacException(f"Failed to fetch messages: {response.text}")
@@ -80,7 +81,8 @@ class MailsacClient:
         """Retrieves the plain text content of a message by its ID."""
         headers = self._get_headers()  # Request plain text
         url = f"{self.base_url}/text/{email}/{message_id}"
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers,
+                timeout=MAILSAC_API_TIMEOUT)
 
         if response.status_code == 200:
             return response.text
@@ -105,6 +107,7 @@ class MailsacClient:
         response = requests.get(
             f"{self.base_url}/addresses/{email}/messages/{message_id}",
             headers=headers,
+            timeout=MAILSAC_API_TIMEOUT
         )
         if response.status_code != 200:
             raise MailsacException(f"Failed to fetch message: {response.text}")
@@ -129,6 +132,7 @@ class MailsacClient:
         response = requests.delete(
             f"{self.base_url}/addresses/{email}/messages/{message_id}",
             headers=headers,
+            timeout=MAILSAC_API_TIMEOUT
         )
         if response.status_code != 200:
             raise MailsacException(f"Failed to delete message: {response.text}")
@@ -151,6 +155,7 @@ class MailsacClient:
         response = requests.delete(
             f"{self.base_url}/addresses/{email}/messages",
             headers=headers,
+            timeout=MAILSAC_API_TIMEOUT
         )
         if response.status_code != 200:
             raise MailsacException(f"Failed to delete message: {response.text}")
@@ -168,7 +173,11 @@ class MailsacClient:
             headers = self._get_headers()  # Default is JSON
             # Perform a simple GET request to the base URL or
             # an endpoint that does not modify data
-            response = requests.get(f"{self.base_url}/addresses", headers=headers)
+            response = requests.get(
+                f"{self.base_url}/addresses",
+                headers=headers,
+                timeout=MAILSAC_API_TIMEOUT
+            )
             return response.status_code == 200
         except requests.RequestException as e:
             print(f"Health check failed: {e}")
