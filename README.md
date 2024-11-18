@@ -42,7 +42,7 @@ This is a Python client library for interacting with the Mailsac REST API. It pr
 To install the Mailsac client library, you can use pip:
 
 ```
-pip install -r requirements.txt
+pip install pymailsac
 ```
 
 ## Usage
@@ -50,7 +50,7 @@ pip install -r requirements.txt
 Here is a basic example of how to use the MailsacClient:
 
 ```python
-from mailsac.client import MailsacClient
+from pymailsac.client import MailsacClient
 
 # Initialize the client
 client = MailsacClient(api_key='your_api_key')
