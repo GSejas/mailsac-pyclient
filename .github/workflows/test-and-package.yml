@@ -55,6 +55,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        export PATH="$HOME/.local/bin:$PATH"
+        poetry config virtualenvs.create false  # Ensure Poetry uses the project environment
+        poetry --version
+
+    - name: Install dependencies with Poetry
+      run: |
+        export PATH="$HOME/.local/bin:$PATH"
+        poetry install
+
     - name: Build package
       run: |
         export PATH="$HOME/.local/bin:$PATH"
