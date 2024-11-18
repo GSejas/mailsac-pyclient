@@ -8,12 +8,16 @@ classifiers = [
         'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
     ]
+license = "MIT"
+homepage = "https://github.com/GSejas/mailsac-pyclient"
+repository = "https://github.com/GSejas/mailsac-pyclient"
+documentation = "https://github.com/GSejas/mailsac-pyclient/blob/master/README.md"
+keywords = ["mailsac", "api", "wrapper", "client"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 pydantic = "^2.9.2"
 requests = "^2.32.3"
-
 
 [tool.poetry.group.dev.dependencies]
 sib-api-v3-sdk = "^7.6.0"
