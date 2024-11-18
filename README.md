@@ -2,7 +2,7 @@
 
 ![Build Status](https://github.com/gsejas/mailsac-pyclient/actions/workflows/test-and-package.yml/badge.svg)
 ![PyPI Version](https://img.shields.io/pypi/v/pymailsac)
-![License](https://img.shields.io/github/license/GSejas/mailsac-pyclient)
+![License](https://img.shields.io/github/license/Gsejas/mailsac-pyclient)
 ![Python Version](https://img.shields.io/pypi/pyversions/pymailsac)
 
 This is a Python client library for interacting with the Mailsac REST API. It provides a simple interface to receive, and manage emails using Mailsac's services. See full documentation for the API, here https://mailsac.com/docs/api/#section/About-the-API
