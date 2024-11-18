@@ -17,6 +17,7 @@ from .schemas import EmailMessage
 
 MAILSAC_API_TIMEOUT = 30
 
+
 class MailsacException(Exception):
     """Custom exception for Mailsac errors."""
 
@@ -76,9 +77,20 @@ class MailsacClient:
         messages = response.json()
         return [EmailMessage(**msg) for msg in messages]
 
-
     def get_message_plain_text(self, email: str, message_id: str) -> str:
-        """Retrieves the plain text content of a message by its ID."""
+        """
+        Retrieve the plain text content of an email message.
+
+        Args:
+            email (str): The email address from which to retrieve the message.
+            message_id (str): The ID of the message to retrieve.
+
+        Returns:
+            str: The plain text content of the email message.
+
+        Raises:
+            Exception: If the request to retrieve the message fails.
+        """
         headers = self._get_headers()  # Request plain text
         url = f"{self.base_url}/text/{email}/{message_id}"
         response = requests.get(url, headers=headers,
@@ -91,7 +103,7 @@ class MailsacClient:
 
     def get_message(self, email: str, message_id: str) -> EmailMessage:
         """
-        Fetches a single message by ID.
+        Fetches a single message metadata by ID.
 
         Args:
             email (str): The email address to fetch the message for.
@@ -136,8 +148,7 @@ class MailsacClient:
         )
         if response.status_code != 200:
             raise MailsacException(f"Failed to delete message: {response.text}")
-
-        return response.status_code == 204
+        return True
 
     def delete_messages(self, email: str):
         """
@@ -159,8 +170,7 @@ class MailsacClient:
         )
         if response.status_code != 200:
             raise MailsacException(f"Failed to delete message: {response.text}")
-
-        return response.status_code == 204
+        return True
 
     def check_health(self) -> bool:
         """

@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 # Retrieve the test API key from environment variables
-test_api_key = os.getenv("MAILSAC_API_KEY")
-mail_test_email = os.getenv("MAILSAC_TEST_EMAIL")
+test_api_key = "test_api_key"
+mail_test_email = "test@testing.com"
 
 
 @pytest.fixture
