@@ -168,7 +168,7 @@ class MailsacClient:
             headers=headers,
             timeout=MAILSAC_API_TIMEOUT
         )
-        if response.status_code != 200:
+        if response.status_code != 204:
             raise MailsacException(f"Failed to delete message: {response.text}")
         return True
 

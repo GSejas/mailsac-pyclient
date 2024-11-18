@@ -101,7 +101,7 @@ def test_delete_message(mock_delete, client):
 def test_delete_messages(mock_delete, client):
     mail_test_email = "test@example.com"
     mock_response = Mock()
-    mock_response.status_code = 200
+    mock_response.status_code = 204
     mock_delete.return_value = mock_response
 
     logger.info("Starting test_delete_messages")
