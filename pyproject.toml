@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pymailsac"
-version = "0.1.0"
+version = "0.1.1"
 description = "API Wrapper Client for Mailsac"
 authors = ["GSejas <jsequeira03@gmail.com>"]
 readme = "README.md"
