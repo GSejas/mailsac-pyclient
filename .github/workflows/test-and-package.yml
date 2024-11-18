@@ -60,8 +60,7 @@ jobs:
         export PATH="$HOME/.local/bin:$PATH"
         poetry build
 
-    - name: Upload package
-      uses: actions/upload-artifact@v2
-      with:
-        name: dist
-        path: dist/
+    - name: Publish to PyPI
+      env:
+        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
+      run: poetry publish --build
